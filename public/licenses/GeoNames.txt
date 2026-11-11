@@ -1,0 +1,2 @@
+GeoNames: https://www.geonames.org/ — CC BY 4.0 https://creativecommons.org/licenses/by/4.0/
+Derived city subset. Data supplied without warranty.

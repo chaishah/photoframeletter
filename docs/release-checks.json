@@ -1,0 +1,78 @@
+[
+  {
+    "name": "perth-default",
+    "sha256": "8f66a877770e6c138c631c7b8d3468444ce0c5440eb7ac441ef213ec0a3ac1e8",
+    "triangles": 74420,
+    "bytes3mf": 805325,
+    "nativeSlice": true,
+    "independentGeometry": true,
+    "layerFilaments": [
+      {
+        "filament_list": "0 1 2 3",
+        "layer_ranges": "0 2"
+      },
+      {
+        "filament_list": "0",
+        "layer_ranges": "3 19"
+      }
+    ],
+    "physicalPrint": false
+  },
+  {
+    "name": "perth-8mm",
+    "sha256": "ef2c247ebd638007ed3a8ef9c32df190a881378b1deb5254ff51d4760e914c9d",
+    "triangles": 74420,
+    "bytes3mf": 805325,
+    "nativeSlice": true,
+    "independentGeometry": true,
+    "layerFilaments": [
+      {
+        "filament_list": "0 1 2 3",
+        "layer_ranges": "0 2"
+      },
+      {
+        "filament_list": "0",
+        "layer_ranges": "3 39"
+      }
+    ],
+    "physicalPrint": false
+  },
+  {
+    "name": "london-two-colour",
+    "sha256": "8cce743a29746fa659ab6e3409d5e3f1bc1e597e4b23b9d7772debb9d69d2b62",
+    "triangles": 59604,
+    "bytes3mf": 644201,
+    "nativeSlice": true,
+    "independentGeometry": true,
+    "layerFilaments": [
+      {
+        "filament_list": "0 1",
+        "layer_ranges": "0 2"
+      },
+      {
+        "filament_list": "0",
+        "layer_ranges": "3 19"
+      }
+    ],
+    "physicalPrint": false
+  },
+  {
+    "name": "north-pole",
+    "sha256": "815282c236bc30c4f610496db07c12585d9d20d35cc727b4035dfcde7cb9cc9a",
+    "triangles": 59804,
+    "bytes3mf": 647301,
+    "nativeSlice": true,
+    "independentGeometry": true,
+    "layerFilaments": [
+      {
+        "filament_list": "0 1 2 3",
+        "layer_ranges": "0 2"
+      },
+      {
+        "filament_list": "0",
+        "layer_ranges": "3 19"
+      }
+    ],
+    "physicalPrint": false
+  }
+]

@@ -1,0 +1,438 @@
+{
+  "source": "Skyfield apparent altaz, no atmospheric refraction; JPL DE440s; civil UTC approximated as UT1 to match Astronomy Engine; historical/future atomic UTC is not implied",
+  "kernelSha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2",
+  "cases": [
+    {
+      "latitude": -31.9523,
+      "longitude": 115.8613,
+      "utc": "2026-11-11T12:00:00Z",
+      "starId": 7574,
+      "name": "Achernar",
+      "altitude": 53.766454321592704,
+      "azimuth": 145.3866762879483
+    },
+    {
+      "latitude": -31.9523,
+      "longitude": 115.8613,
+      "utc": "2026-11-11T12:00:00Z",
+      "starId": 11734,
+      "name": "Polaris",
+      "altitude": -31.646398766115713,
+      "azimuth": 0.6381493331556221
+    },
+    {
+      "latitude": -31.9523,
+      "longitude": 115.8613,
+      "utc": "2026-11-11T12:00:00Z",
+      "starId": 30365,
+      "name": "Canopus",
+      "altitude": 14.37443217497774,
+      "azimuth": 143.9047924229532
+    },
+    {
+      "latitude": -31.9523,
+      "longitude": 115.8613,
+      "utc": "2026-11-11T12:00:00Z",
+      "starId": 32263,
+      "name": "Sirius",
+      "altitude": -11.0610779229429,
+      "azimuth": 117.90605174018029
+    },
+    {
+      "latitude": -31.9523,
+      "longitude": 115.8613,
+      "utc": "2026-11-11T12:00:00Z",
+      "starId": 37173,
+      "name": "Procyon",
+      "altitude": -35.14131078760859,
+      "azimuth": 108.02835131638417
+    },
+    {
+      "latitude": -31.9523,
+      "longitude": 115.8613,
+      "utc": "2026-11-11T12:00:00Z",
+      "starId": 69451,
+      "name": "Arcturus",
+      "altitude": -45.42831594777014,
+      "azimuth": 265.11323858445667
+    },
+    {
+      "latitude": -31.9523,
+      "longitude": 115.8613,
+      "utc": "2026-11-11T12:00:00Z",
+      "starId": 71456,
+      "name": "Rigil Kentaurus",
+      "altitude": 12.682079760122601,
+      "azimuth": 203.7007973048411
+    },
+    {
+      "latitude": -31.9523,
+      "longitude": 115.8613,
+      "utc": "2026-11-11T12:00:00Z",
+      "starId": 90979,
+      "name": "Vega",
+      "altitude": -4.238827438193192,
+      "azimuth": 313.98617185782723
+    },
+    {
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "utc": "2026-11-11T20:00:00Z",
+      "starId": 7574,
+      "name": "Achernar",
+      "altitude": -22.108935797333153,
+      "azimuth": 160.94409679893658
+    },
+    {
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "utc": "2026-11-11T20:00:00Z",
+      "starId": 11734,
+      "name": "Polaris",
+      "altitude": 51.8489264873186,
+      "azimuth": 0.839579539207158
+    },
+    {
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "utc": "2026-11-11T20:00:00Z",
+      "starId": 30365,
+      "name": "Canopus",
+      "altitude": -46.23081953237264,
+      "azimuth": 122.34030414629781
+    },
+    {
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "utc": "2026-11-11T20:00:00Z",
+      "starId": 32263,
+      "name": "Sirius",
+      "altitude": -25.888626960956437,
+      "azimuth": 84.51361284068098
+    },
+    {
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "utc": "2026-11-11T20:00:00Z",
+      "starId": 37173,
+      "name": "Procyon",
+      "altitude": -16.21622212317409,
+      "azimuth": 58.92831709646687
+    },
+    {
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "utc": "2026-11-11T20:00:00Z",
+      "starId": 69451,
+      "name": "Arcturus",
+      "altitude": -9.923455598014964,
+      "azimuth": 318.77818860294633
+    },
+    {
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "utc": "2026-11-11T20:00:00Z",
+      "starId": 71456,
+      "name": "Rigil Kentaurus",
+      "altitude": -61.697323552179434,
+      "azimuth": 231.17052037474394
+    },
+    {
+      "latitude": 51.5074,
+      "longitude": -0.1278,
+      "utc": "2026-11-11T20:00:00Z",
+      "starId": 90979,
+      "name": "Vega",
+      "altitude": 40.1899364578315,
+      "azimuth": 284.82782188716044
+    },
+    {
+      "latitude": 0,
+      "longitude": 0,
+      "utc": "2000-01-01T12:00:00Z",
+      "starId": 7574,
+      "name": "Achernar",
+      "altitude": -7.505030757503235,
+      "azimuth": 148.02138687300564
+    },
+    {
+      "latitude": 0,
+      "longitude": 0,
+      "utc": "2000-01-01T12:00:00Z",
+      "starId": 11734,
+      "name": "Polaris",
+      "altitude": -0.34101476194323627,
+      "azimuth": 0.648967286977337
+    },
+    {
+      "latitude": 0,
+      "longitude": 0,
+      "utc": "2000-01-01T12:00:00Z",
+      "starId": 30365,
+      "name": "Canopus",
+      "altitude": -37.170240097063,
+      "azimuth": 176.60866154102118
+    },
+    {
+      "latitude": 0,
+      "longitude": 0,
+      "utc": "2000-01-01T12:00:00Z",
+      "starId": 32263,
+      "name": "Sirius",
+      "altitude": -73.26211075444688,
+      "azimuth": 182.77141064792454
+    },
+    {
+      "latitude": 0,
+      "longitude": 0,
+      "utc": "2000-01-01T12:00:00Z",
+      "starId": 37173,
+      "name": "Procyon",
+      "altitude": -74.72865665665418,
+      "azimuth": 290.22203772567343
+    },
+    {
+      "latitude": 0,
+      "longitude": 0,
+      "utc": "2000-01-01T12:00:00Z",
+      "starId": 69451,
+      "name": "Arcturus",
+      "altitude": 22.079102744240224,
+      "azimuth": 290.7677653250802
+    },
+    {
+      "latitude": 0,
+      "longitude": 0,
+      "utc": "2000-01-01T12:00:00Z",
+      "starId": 71456,
+      "name": "Rigil Kentaurus",
+      "altitude": 13.864198005448408,
+      "azimuth": 205.92602862762047
+    },
+    {
+      "latitude": 0,
+      "longitude": 0,
+      "utc": "2000-01-01T12:00:00Z",
+      "starId": 90979,
+      "name": "Vega",
+      "altitude": 51.19883968602871,
+      "azimuth": 358.4674956300444
+    },
+    {
+      "latitude": 90,
+      "longitude": 0,
+      "utc": "1950-06-21T00:00:00Z",
+      "starId": 7574,
+      "name": "Achernar",
+      "altitude": -57.48261152628395,
+      "azimuth": 64.6542379377319
+    },
+    {
+      "latitude": 90,
+      "longitude": 0,
+      "utc": "1950-06-21T00:00:00Z",
+      "starId": 11734,
+      "name": "Polaris",
+      "altitude": 89.02708567660514,
+      "azimuth": 61.636556649586545
+    },
+    {
+      "latitude": 90,
+      "longitude": 0,
+      "utc": "1950-06-21T00:00:00Z",
+      "starId": 30365,
+      "name": "Canopus",
+      "altitude": -52.66603915140352,
+      "azimuth": 352.91791050831483
+    },
+    {
+      "latitude": 90,
+      "longitude": 0,
+      "utc": "1950-06-21T00:00:00Z",
+      "starId": 32263,
+      "name": "Sirius",
+      "altitude": -16.644585503355863,
+      "azimuth": 347.8856061923124
+    },
+    {
+      "latitude": 90,
+      "longitude": 0,
+      "utc": "1950-06-21T00:00:00Z",
+      "starId": 37173,
+      "name": "Procyon",
+      "altitude": 5.356015665407937,
+      "azimuth": 334.4487783709286
+    },
+    {
+      "latitude": 90,
+      "longitude": 0,
+      "utc": "1950-06-21T00:00:00Z",
+      "starId": 69451,
+      "name": "Arcturus",
+      "altitude": 19.43976790372361,
+      "azimuth": 235.2668731181683
+    },
+    {
+      "latitude": 90,
+      "longitude": 0,
+      "utc": "1950-06-21T00:00:00Z",
+      "starId": 71456,
+      "name": "Rigil Kentaurus",
+      "altitude": -60.63308445814679,
+      "azimuth": 229.54991519858805
+    },
+    {
+      "latitude": 90,
+      "longitude": 0,
+      "utc": "1950-06-21T00:00:00Z",
+      "starId": 90979,
+      "name": "Vega",
+      "altitude": 38.733471205406886,
+      "azimuth": 169.79934663251248
+    },
+    {
+      "latitude": -90,
+      "longitude": 180,
+      "utc": "2100-12-31T12:00:00Z",
+      "starId": 7574,
+      "name": "Achernar",
+      "altitude": 56.731103186105784,
+      "azimuth": 285.36156228547895
+    },
+    {
+      "latitude": -90,
+      "longitude": 180,
+      "utc": "2100-12-31T12:00:00Z",
+      "starId": 11734,
+      "name": "Polaris",
+      "altitude": -89.54264023717904,
+      "azimuth": 349.9094138971947
+    },
+    {
+      "latitude": -90,
+      "longitude": 180,
+      "utc": "2100-12-31T12:00:00Z",
+      "starId": 30365,
+      "name": "Canopus",
+      "altitude": 52.75489555185272,
+      "azimuth": 356.55034367792024
+    },
+    {
+      "latitude": -90,
+      "longitude": 180,
+      "utc": "2100-12-31T12:00:00Z",
+      "starId": 32263,
+      "name": "Sirius",
+      "altitude": 16.864207123034348,
+      "azimuth": 2.398331478385576
+    },
+    {
+      "latitude": -90,
+      "longitude": 180,
+      "utc": "2100-12-31T12:00:00Z",
+      "starId": 37173,
+      "name": "Procyon",
+      "altitude": -4.955062119416419,
+      "azimuth": 16.143773666240076
+    },
+    {
+      "latitude": -90,
+      "longitude": 180,
+      "utc": "2100-12-31T12:00:00Z",
+      "starId": 69451,
+      "name": "Arcturus",
+      "altitude": -18.658912618084845,
+      "azimuth": 115.05947897262139
+    },
+    {
+      "latitude": -90,
+      "longitude": 180,
+      "utc": "2100-12-31T12:00:00Z",
+      "starId": 71456,
+      "name": "Rigil Kentaurus",
+      "altitude": 61.24461178536528,
+      "azimuth": 121.64134834492799
+    },
+    {
+      "latitude": -90,
+      "longitude": 180,
+      "utc": "2100-12-31T12:00:00Z",
+      "starId": 90979,
+      "name": "Vega",
+      "altitude": -38.88404482039932,
+      "azimuth": 180.0748885144599
+    },
+    {
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "utc": "1900-01-01T12:00:00Z",
+      "starId": 7574,
+      "name": "Achernar",
+      "altitude": -72.84405204164317,
+      "azimuth": 174.25389236776667
+    },
+    {
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "utc": "1900-01-01T12:00:00Z",
+      "starId": 11734,
+      "name": "Polaris",
+      "altitude": 39.50028752772972,
+      "azimuth": 0.16322748056883285
+    },
+    {
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "utc": "1900-01-01T12:00:00Z",
+      "starId": 30365,
+      "name": "Canopus",
+      "altitude": -43.23720947399754,
+      "azimuth": 230.9294447303352
+    },
+    {
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "utc": "1900-01-01T12:00:00Z",
+      "starId": 32263,
+      "name": "Sirius",
+      "altitude": -23.09174145823706,
+      "azimuth": 267.5729774375248
+    },
+    {
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "utc": "1900-01-01T12:00:00Z",
+      "starId": 37173,
+      "name": "Procyon",
+      "altitude": 1.1950540067560103,
+      "azimuth": 276.2036980202307
+    },
+    {
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "utc": "1900-01-01T12:00:00Z",
+      "starId": 69451,
+      "name": "Arcturus",
+      "altitude": 68.34997352093373,
+      "azimuth": 164.261915885106
+    },
+    {
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "utc": "1900-01-01T12:00:00Z",
+      "starId": 71456,
+      "name": "Rigil Kentaurus",
+      "altitude": -11.567503203082278,
+      "azimuth": 174.21218368259917
+    },
+    {
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "utc": "1900-01-01T12:00:00Z",
+      "starId": 90979,
+      "name": "Vega",
+      "altitude": 36.400728602690435,
+      "azimuth": 67.03458831402264
+    }
+  ]
+}

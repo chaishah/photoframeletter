@@ -1,0 +1,11 @@
+node_modules/
+dist/
+validation/
+samples/
+*.tsbuildinfo
+.env*
+.DS_Store
+.dependency-backup*/
+.package-lock-backup.json
+/scripts/native_probe.py
+/scripts/debug-art.ts
