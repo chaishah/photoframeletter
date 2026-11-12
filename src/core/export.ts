@@ -1,3 +1,4 @@
+import { printDetails } from "./print-details";
 import { zipSync, unzipSync, strToU8, strFromU8 } from "fflate";
 import type { Model, Mesh } from "./types";
 import { PLATE } from "./print-layout";
@@ -142,7 +143,7 @@ export function makeStlZip(model: Model) {
     files[`filament-${slot + 1}-${mesh.colour.slice(1)}.stl`] = binaryStl(mesh);
   }
   files["READ-ME.txt"] = strToU8(
-    "Import ALL STL files together into Bambu Studio as parts of ONE object. Units: mm. Preserve the shared origin and relative Z positions. Assign the named filament colours. Print face-down using 0.2 mm layers, with the inlays in layers 1–3. Slice and inspect before printing. STL does not store colours or printer settings.\n",
+    `Import ALL STL files together into Bambu Studio as parts of ONE object. Units: mm. Preserve the shared origin and relative Z positions. Assign the named filament colours. Print face-down using 0.2 mm layers, with the inlays in layers 1–${Math.round(printDetails(model.settings).inlayDepth / 0.2)}. Slice and inspect before printing. STL does not store colours or printer settings.\n`,
   );
   if (model.settings.displayStand)
     files["DISPLAY-STAND.txt"] = strToU8(

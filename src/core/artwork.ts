@@ -1,3 +1,4 @@
+import { printDetails } from "./print-details";
 import type { Font, PathCommand } from "opentype.js";
 import {
   CARD,
@@ -160,7 +161,7 @@ export function textPaths(
 }
 export function artwork(s: Settings, sky: Sky, font: Font, k: Kernel): Paths[] {
   const starPaths = sky.stars.map((st) => circle(st.x, st.y, st.radius));
-  const lines = k.simplify(k.union(k.stroke(sky.segments, 0.65)));
+  const lines = k.simplify(k.union(k.stroke(sky.segments, printDetails(s).lineWidth)));
   const ring = k.op(
     [circle(CARD.cx, CARD.cy, CARD.mapRadius + 0.75)],
     [circle(CARD.cx, CARD.cy, CARD.mapRadius + 0.1)],

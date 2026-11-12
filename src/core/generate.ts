@@ -1,6 +1,6 @@
+import { printDetails } from "./print-details";
 import type { Font } from "opentype.js";
 import {
-  CARD,
   type Settings,
   type Star,
   type Model,
@@ -112,7 +112,8 @@ export async function generate(
     physical[0] = k.op([outline()], foreground, "difference");
   }
   foreground = k.op([outline()], physical[0], "difference");
-  const meshes = [backing(physical[0], foreground, s.thickness, colours[0])];
+  const { inlayDepth } = printDetails(s);
+  const meshes = [backing(physical[0], foreground, s.thickness, colours[0], inlayDepth)];
   for (let slot = 1; slot < colours.length; slot++)
     meshes.push(
       extrude(
@@ -122,7 +123,7 @@ export async function generate(
           .join(" + "),
         colours[slot],
         slot,
-        CARD.inlay,
+        inlayDepth,
       ),
     );
   progress("Checking topology and dimensions");

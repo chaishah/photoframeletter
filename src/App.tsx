@@ -3,6 +3,7 @@ import { z } from "zod";
 import { decodeJson } from "./core/data";
 import { OCCASIONS, applyOccasion } from "./core/occasions";
 import { PLATE, STAND } from "./core/print-layout";
+import { printDetails } from "./core/print-details";
 import {
   DEFAULT_SETTINGS,
   type Model,
@@ -60,6 +61,9 @@ const schema = z
     title: z.string(),
     caption: z.boolean(),
     displayStand: z.boolean().optional(),
+    inlayDepth: z.number().optional(),
+    lineWidth: z.number().optional(),
+    starScale: z.number().optional(),
     palette: z.tuple([z.string(), z.string(), z.string(), z.string()]),
   })
   .strict();
@@ -566,6 +570,32 @@ export default function App() {
               <span>Quiet sky</span>
               <span>More stars</span>
             </div>
+            <details className="print-details" open>
+              <summary>Print detail</summary>
+              <p>Stronger stars and lines, with a flat front. Colour depth applies to all inlays, including lettering.</p>
+              <div className="range-label">
+                <label htmlFor="inlay-depth">Colour depth</label>
+                <strong>{printDetails(s).inlayDepth.toFixed(1)} mm · {Math.round(printDetails(s).inlayDepth / 0.2)} layers</strong>
+              </div>
+              <input id="inlay-depth" type="range" min="0.6" max="1.2" step="0.2"
+                value={printDetails(s).inlayDepth} onChange={(e) => update("inlayDepth", e.target.valueAsNumber)} />
+              <div className="range-label">
+                <label htmlFor="line-width">Constellation width</label>
+                <strong>{printDetails(s).lineWidth.toFixed(2)} mm</strong>
+              </div>
+              <input id="line-width" type="range" min="0.65" max="1" step="0.05"
+                value={printDetails(s).lineWidth} onChange={(e) => update("lineWidth", e.target.valueAsNumber)} />
+              <div className="range-label">
+                <label htmlFor="star-scale">Star size</label>
+                <strong>{Math.round(printDetails(s).starScale * 100)}%</strong>
+              </div>
+              <input id="star-scale" type="range" min="1" max="1.3" step="0.05"
+                value={printDetails(s).starScale} onChange={(e) => update("starScale", e.target.valueAsNumber)} />
+              <button className="small-link" onClick={() => {
+                setS((current) => ({ ...current, inlayDepth: 1, lineWidth: 0.9, starScale: 1.25 }));
+                setError(""); setField("");
+              }}>Use recommended print detail</button>
+            </details>
             <label>Four-colour palette</label>
             <div className="palette">
               {["Background", "Stars", "Lines", "Lettering"].map((label, i) => (
@@ -836,7 +866,7 @@ export default function App() {
                   </p>
                   <p>
                     3MF limit: 5 MiB · triangle limit: 100,000 · no supports ·
-                    0.6 mm colour inlays.
+                    {printDetails(model.settings).inlayDepth.toFixed(1)} mm colour inlays ({Math.round(printDetails(model.settings).inlayDepth / 0.2)} layers).
                   </p>
                 </details>
               </section>
@@ -873,7 +903,7 @@ export default function App() {
                 <h3>Match your four spools</h3>
                 <p>
                   Assign the palette to the PLA in your AMS. The artwork faces
-                  the plate; colours share the first three 0.2 mm layers.
+                  the plate; colours share the first {Math.round(printDetails(model?.settings ?? s).inlayDepth / 0.2)} layers at 0.2 mm per layer.
                 </p>
               </div>
             </li>

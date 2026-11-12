@@ -565,6 +565,9 @@ input[type="range"]::-webkit-slider-thumb {
   padding: 18px 21px;
 }
 .stand-option { margin-top: 22px; padding-top: 12px; border-top: 1px solid #dfe6d8; }
+.print-details { margin: 20px 0; padding: 15px; background: #f3f6ef; border-radius: 8px; }
+.print-details summary { font-size: 12px; font-weight: 600; cursor: pointer; }
+.print-details p { font-size: 11px; color: #50675a; }
 .stand-option p { font-size: 11px; color: #50675a; }
 .plate-layout {
   display: flex;

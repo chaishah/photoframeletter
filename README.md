@@ -50,7 +50,7 @@ Existing saved designs without this option still load with no stand.
 - A6 portrait: 105 × 148 mm, rounded 3 mm corners.
 - Thickness: 4–8 mm in 0.2 mm steps; default 4 mm.
 - A flat, non-embossed front, printed face down. Colour inlays occupy the same
-  first three 0.2 mm layers; the continuous backing starts above them.
+  first five 0.2 mm layers by default (1.0 mm depth); the continuous backing starts above them.
 - Bambu P1S, 0.4 mm nozzle, PLA, up to four colours including the background.
 - Matching palette choices share one filament and are merged before meshing.
 - 3MF preserves parts, colours and printer settings. For STL, import every file
@@ -60,6 +60,20 @@ This is one flat assembled card, not a single 0.2 mm physical layer. Inspect the
 native slice and map the spools before printing. Physical print adhesion, colour
 opacity and postal suitability still require a real sample. Measure and weigh
 the packaged print before choosing postage.
+
+## Print detail controls
+
+New designs use 1.0 mm colour depth (five 0.2 mm layers), 0.9 mm constellation
+lines and stars at 125% of their original size. The front stays flush. Colour
+depth applies to all inlays, including lettering, while card thickness and the
+same-plate stand layout are unchanged.
+
+Use **Print detail** to adjust depth from 0.6–1.2 mm in 0.2 mm steps, line width
+from 0.65–1.0 mm in 0.05 mm steps, or star size from 100–130% in 5% steps.
+Saved designs retain these choices. Older JSON designs without these fields
+reproduce the original 0.6 mm / 0.65 mm / 100% dimensions; select **Use recommended
+print detail** to upgrade them, then regenerate. Wider shapes can merge and
+change printability, so every design is validated before export.
 
 ## Validation and compact files
 
@@ -73,8 +87,7 @@ edges, degenerate triangles and small disconnected print features. Curves are
 flattened with bounded geometric error; hidden and interior same-colour surfaces
 are removed. No global mesh decimation moves the stars or colour boundaries.
 
-The target is 30,000 triangles / 2 MiB. Detailed maps can exceed that target: the
-default contains 74,420 triangles and is approximately 0.77 MiB. Downloads are
+The target is 30,000 triangles / 2 MiB. Detailed maps can exceed that target. Downloads are
 blocked above **100,000 triangles or 5 MiB**. The app never quietly drops stars to
 meet this budget. Touching star disks can join, and disconnected constellation
 fragments unable to contain a 0.4 mm bead are omitted; the preview shows this.

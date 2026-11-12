@@ -31,6 +31,30 @@ beforeAll(async () => {
   perth = await generate(DEFAULT_SETTINGS, stars, lines, font, k);
 });
 describe("generation and export gates", () => {
+  for (const detail of [
+    { inlayDepth: undefined, lineWidth: undefined, starScale: undefined },
+    { inlayDepth: 1.2, lineWidth: 1, starScale: 1.3 },
+  ]) {
+    it(`validates legacy and maximum print detail: ${JSON.stringify(detail)}`, async () => {
+      const model = await generate({ ...DEFAULT_SETTINGS, ...detail }, stars, lines, font, k);
+      expect(model.report.errors).toEqual([]);
+      expect(make3mf(model, settings).length).toBeLessThan(5 * 1024 * 1024);
+    }, 15000);
+  }
+  for (const inlayDepth of [0.6, 0.8, 1.2]) {
+    it(`exports ${inlayDepth} mm inlays with matching backing and layer instructions`, async () => {
+      const model = await generate({ ...DEFAULT_SETTINGS, inlayDepth }, stars, lines, font, k);
+      expect(model.report.errors).toEqual([]);
+      expect(model.report.volume).toBeCloseTo(perth.report.volume, 4);
+      for (const mesh of model.meshes.slice(1))
+        expect(new Set(mesh.vertices.map((p) => p[2]))).toEqual(new Set([0, inlayDepth]));
+      const archive = unzipSync(make3mf(model, settings));
+      expect(strFromU8(archive["3D/Objects/object_1.model"])).toContain(`z="${inlayDepth.toFixed(5)}"`);
+      const stls = unzipSync(makeStlZip(model));
+      expect(strFromU8(stls["READ-ME.txt"])).toContain(`layers 1–${Math.round(inlayDepth / 0.2)}`);
+      expect(JSON.parse(strFromU8(stls["design.json"])).inlayDepth).toBe(inlayDepth);
+    }, 15000);
+  }
   for (const thickness of [4, 6, 8]) {
     it(`exports card and ${thickness} mm stand together on plate 1`, async () => {
       const input: Settings = { ...DEFAULT_SETTINGS, displayStand: true, thickness,
@@ -86,7 +110,7 @@ describe("generation and export gates", () => {
     expect(perth.report.stars).toBeGreaterThan(500);
     expect(make3mf(perth, settings).length).toBeLessThan(1024 * 1024);
     for (const m of perth.meshes.slice(1))
-      expect(new Set(m.vertices.map((v) => v[2]))).toEqual(new Set([0, 0.6]));
+      expect(new Set(m.vertices.map((v) => v[2]))).toEqual(new Set([0, 1]));
   });
   it("exports a 3MF with complete per-filament settings and assigned parts", () => {
     const z = unzipSync(make3mf(perth, settings));

@@ -53,6 +53,16 @@ export function resolveTime(
 }
 export const timezoneNames = () => moment.tz.names();
 export function validateSettings(s: Settings): ResolvedTime {
+  for (const [field, min, max, step] of [
+    ["inlayDepth", 0.6, 1.2, 0.2],
+    ["lineWidth", 0.65, 1, 0.05],
+    ["starScale", 1, 1.3, 0.05],
+  ] as const) {
+    const value = s[field];
+    if (value !== undefined && (!Number.isFinite(value) || value < min || value > max ||
+      Math.abs((value - min) / step - Math.round((value - min) / step)) > 1e-7))
+      throw new InputError(field, `${field === "inlayDepth" ? "Colour depth" : field === "lineWidth" ? "Line width" : "Star scale"} must be between ${min} and ${max} in steps of ${step}.`);
+  }
   if (s.displayStand !== undefined && typeof s.displayStand !== "boolean")
     throw new InputError("displayStand", "Choose whether to include a display stand.");
   if (s.version !== 1)

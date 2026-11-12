@@ -38,6 +38,10 @@ class Builder {
           (flat[b * 2] - flat[a * 2]) * (flat[c * 2 + 1] - flat[a * 2 + 1]) -
           (flat[b * 2 + 1] - flat[a * 2 + 1]) * (flat[c * 2] - flat[a * 2]);
         triArea += Math.abs(cross) / 2;
+        // Earcut can emit a collinear bridge triangle between touching hole
+        // edges. Leave it out so conform() splits the neighbouring cap edges
+        // at the retained boundary vertices instead of sealing a zero-area face.
+        if (Math.abs(cross) < 1e-10) continue;
         if (cross > 0 !== up) [b, c] = [c, b];
         this.triangles.push([ids[a], ids[b], ids[c]]);
       }
@@ -138,13 +142,14 @@ export function backing(
   foreground: Paths,
   height: number,
   colour: string,
+  inlayDepth = CARD.inlay,
 ): Mesh {
   const b = new Builder();
   b.cap(background, 0, false);
-  b.sides(background, 0, CARD.inlay);
-  b.cap(foreground, CARD.inlay, false);
+  b.sides(background, 0, inlayDepth);
+  b.cap(foreground, inlayDepth, false);
   b.cap([outline()], height, true);
-  b.sides([outline()], CARD.inlay, height);
+  b.sides([outline()], inlayDepth, height);
   b.conform();
   return {
     name: "Background and continuous backing",

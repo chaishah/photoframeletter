@@ -52,7 +52,7 @@ for name in ['perth-default','perth-8mm','london-two-colour','north-pole']:
         stats=E.fromstring(st)
         assert all(int(v)==0 for k,v in stats.attrib.items() if k!='face_count')
     layer_lists=[dict(x.attrib) for x in plate.findall('layer_filament_lists/layer_filament_list')]
-    assert layer_lists[0]['layer_ranges']=='0 2'
+    assert layer_lists[0]['layer_ranges']==f"0 {round(model['settings'].get('inlayDepth',0.6)/0.2)-1}"
     assert layer_lists[-1]['filament_list']=='0'
     results.append({'name':name,'sha256':native['sourceSha256'],'triangles':model['report']['triangles'],'bytes3mf':source.stat().st_size,'nativeSlice':True,'independentGeometry':True,'layerFilaments':layer_lists,'physicalPrint':False})
 out=ROOT/'validation'/'release-checks.json';out.write_text(json.dumps(results,indent=2))

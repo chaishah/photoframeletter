@@ -26,6 +26,9 @@ export interface Settings {
   title: string;
   caption: boolean;
   displayStand?: boolean;
+  inlayDepth?: number;
+  lineWidth?: number;
+  starScale?: number;
   palette: [string, string, string, string];
 }
 export interface ResolvedTime {
@@ -99,6 +102,9 @@ export const DEFAULT_SETTINGS: Settings = {
   ambiguity: "",
   thickness: 4,
   magnitude: 4.5,
+  inlayDepth: 1,
+  lineWidth: 0.9,
+  starScale: 1.25,
   constellations: true,
   title: "OUR NIGHT SKY",
   caption: true,

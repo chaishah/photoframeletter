@@ -1,3 +1,4 @@
+import { printDetails } from "./print-details";
 import * as A from "astronomy-engine";
 import { CARD, type Settings, type Star, type Sky, type Point } from "./types";
 import { validateSettings } from "./time";
@@ -52,7 +53,7 @@ export function calculateSky(
       azimuth,
       x,
       y,
-      radius: Math.min(1.05, Math.max(0.4, 0.4 + (4.5 - s.mag) * 0.105)),
+      radius: Math.min(1.05, Math.max(0.4, 0.4 + (4.5 - s.mag) * 0.105)) * printDetails(settings).starScale,
       vector,
     };
   });
