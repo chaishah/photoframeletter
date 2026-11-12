@@ -258,6 +258,29 @@ input[aria-invalid="true"] {
   justify-content: space-between;
   align-items: end;
 }
+.occasion-picker {
+  padding: 14px;
+  border: 1px solid #dde3db;
+  border-radius: 8px;
+  background: #fafbf8;
+}
+.occasion-picker > label { margin-top: 0; }
+.occasion-description, .occasion-help, .occasion-status {
+  font-size: 11px;
+  color: #50675a;
+  line-height: 1.6;
+}
+.occasion-preview {
+  border-radius: 6px;
+  padding: 18px 10px;
+  text-align: center;
+}
+.occasion-preview > span { display: block; font-size: 28px; }
+.occasion-preview strong { font-size: 11px; letter-spacing: 1px; }
+.occasion-swatches { display: flex; justify-content: center; gap: 7px; margin-top: 13px; }
+.occasion-swatches span { width: 15px; height: 15px; border-radius: 50%; border: 1px solid #ffffff70; }
+.occasion-apply { width: 100%; color: #355442; }
+.occasion-status:empty { display: none; }
 .range-label label {
   margin-bottom: 4px;
 }

@@ -16,6 +16,17 @@ npm run dev
 Open the URL Vite prints, with `/photoframeletter/` at the end. For a production
 preview, run `npm run build` followed by `npm run preview`.
 
+## Occasion templates
+
+In **Make it yours**, choose one of 12 occasions: Wedding, Anniversary,
+Engagement, First date, Valentine's Day, Birthday, New baby, Graduation,
+New home, Friendship, Remembrance or New Year. Review the title and palette,
+then select **Apply template** and **Update my star map**.
+
+Templates replace the title and four colours while retaining your location,
+date, time, density and print settings. All fields remain editable, and Save
+design / Load design includes the applied title and colours.
+
 ## Print specification
 
 - A6 portrait: 105 × 148 mm, rounded 3 mm corners.

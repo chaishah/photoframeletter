@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { decodeJson } from "./core/data";
+import { OCCASIONS, applyOccasion } from "./core/occasions";
 import {
   DEFAULT_SETTINGS,
   type Model,
@@ -96,6 +97,9 @@ function Card({ model }: { model: Model }) {
   );
 }
 export default function App() {
+  const [occasionId, setOccasionId] = useState(OCCASIONS[0].id);
+  const occasion = OCCASIONS.find((item) => item.id === occasionId)!;
+  const [occasionNotice, setOccasionNotice] = useState("");
   const [s, setS] = useState<Settings>(DEFAULT_SETTINGS),
     [model, setModel] = useState<Model | null>(null),
     [mode, setMode] = useState<"front" | "3d">("front");
@@ -483,6 +487,29 @@ export default function App() {
             <div className="section-title second">
               <span className="step">02</span>
               <h2>Make it yours</h2>
+            </div>
+            <div className="occasion-picker">
+              <label htmlFor="occasion">Start with an occasion</label>
+              <select id="occasion" value={occasionId} disabled={busy}
+                onChange={(e) => { setOccasionId(e.target.value); setOccasionNotice(""); }}>
+                {OCCASIONS.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
+              </select>
+              <p className="occasion-description">{occasion.description}</p>
+              <div className="occasion-preview" style={{ background: occasion.palette[0], color: occasion.palette[3] }}>
+                <span aria-hidden="true" style={{ color: occasion.palette[1] }}>✦</span>
+                <strong>{occasion.title}</strong>
+                <div className="occasion-swatches" aria-label="Template colours">
+                  {occasion.palette.map((colour, i) => <span key={i} style={{ background: colour }} title={`${["Background", "Stars", "Lines", "Lettering"][i]}: ${colour}`} />)}
+                </div>
+              </div>
+              <p className="occasion-help">Applies a title and four colours. Keep your chosen place and time, then personalise below.</p>
+              <button className="secondary occasion-apply" disabled={busy} onClick={() => {
+                setS((current) => applyOccasion(current, occasion));
+                setError("");
+                setField("");
+                setOccasionNotice(`${occasion.name} template applied. Update your star map to preview it.`);
+              }}>Apply {occasion.name.toLowerCase()} template</button>
+              <p className="occasion-status" role="status">{occasionNotice}</p>
             </div>
             <label htmlFor="title">
               Title <span>optional</span>

@@ -5,6 +5,7 @@ import { unzipSync, strFromU8 } from "fflate";
 import { Kernel, splitTouches, totalArea } from "../src/core/clipper";
 import { generate } from "../src/core/generate";
 import { make3mf, makeStlZip } from "../src/core/export";
+import { OCCASIONS, applyOccasion } from "../src/core/occasions";
 import {
   DEFAULT_SETTINGS,
   type Settings,
@@ -30,6 +31,15 @@ beforeAll(async () => {
   perth = await generate(DEFAULT_SETTINGS, stars, lines, font, k);
 });
 describe("generation and export gates", () => {
+  for (const occasion of OCCASIONS) {
+    it(`exports the ${occasion.name} occasion with printable lettering`, async () => {
+      const input = applyOccasion(DEFAULT_SETTINGS, occasion);
+      const model = await generate(input, stars, lines, font, k);
+      expect(model.report.errors).toEqual([]);
+      expect(make3mf(model, settings).length).toBeLessThan(5 * 1024 * 1024);
+      expect(makeStlZip(model).length).toBeGreaterThan(0);
+    }, 15000);
+  }
   it("creates a compact, flat four-colour card with every star centre retained", () => {
     expect(perth.report.errors).toEqual([]);
     expect(perth.report.triangles).toBeLessThan(80000);
@@ -156,6 +166,15 @@ describe("generation and export gates", () => {
 });
 describe("global generation regression cases", () => {
   const cases: Partial<Settings>[] = [
+    {
+      latitude: 40.71427,
+      longitude: -74.00597,
+      timezone: "America/New_York",
+      location: "NEW YORK CITY",
+      date: "2026-03-06",
+      time: "20:00",
+      palette: ["#101E30", "#FFFFFF", "#FFFFFF", "#F4E5C3"],
+    },
     {
       latitude: 51.5074,
       longitude: -0.1278,
