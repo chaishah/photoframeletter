@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { decodeJson } from "./core/data";
 import { OCCASIONS, applyOccasion } from "./core/occasions";
+import { PLATE, STAND } from "./core/print-layout";
 import {
   DEFAULT_SETTINGS,
   type Model,
@@ -58,6 +59,7 @@ const schema = z
     constellations: z.boolean(),
     title: z.string(),
     caption: z.boolean(),
+    displayStand: z.boolean().optional(),
     palette: z.tuple([z.string(), z.string(), z.string(), z.string()]),
   })
   .strict();
@@ -604,6 +606,17 @@ export default function App() {
                 {error}
               </p>
             )}
+            <div className="stand-option">
+              <label className="check">
+                <input type="checkbox" checked={!!s.displayStand}
+                  onChange={(e) => update("displayStand", e.target.checked)} />
+                Include a matching display stand
+              </label>
+              <p>Prints beside your card on the same plate, using the background colour.
+                The slot adjusts to your card thickness.</p>
+              {s.displayStand && <p>Stand: 70 × 30 × 14 mm · slot {(s.thickness + STAND.clearance).toFixed(1)} mm.
+                Assemble after cooling. Physical fit needs a trial print.</p>}
+            </div>
             <button
               className="primary generate"
               disabled={busy}
@@ -709,7 +722,8 @@ export default function App() {
               <div>
                 <span className="eyebrow">FROM SKY TO SPOOL</span>
                 <h2>Ready for your AMS.</h2>
-                <p>A flat front. Up to four colours. One assembled card.</p>
+                <p>A flat front. Up to four colours.
+                  {model?.settings.displayStand ? " Card and stand on one plate." : " One assembled card."}</p>
               </div>
               <button
                 className="primary"
@@ -736,6 +750,26 @@ export default function App() {
                 STL colour parts
               </button>
             </section>
+            {model?.settings.displayStand && (
+              <section className="plate-layout" aria-label="Card and stand print layout">
+                <div>
+                  <h3>Card + stand · one print plate</h3>
+                  <p>Two separate pieces, printed together with a {STAND.cardGap} mm gap.
+                    The stand matches the card background. Both exports retain this layout.</p>
+                  <p>{dirty ? "Showing the last generated layout. Update to include your changes." :
+                    "Open the 3MF as a project. For STL, import all files together as parts of one object."}</p>
+                </div>
+                <svg viewBox="0 0 256 256" role="img" aria-label="256 millimetre square plate with the card and stand spaced 10 millimetres apart">
+                  <rect x="1" y="1" width="254" height="254" rx="6" fill="#e7ece5" stroke="#8d9f91" />
+                  <rect x={PLATE.x - 52.5} y={PLATE.y - 74} width="105" height="148" rx="3" fill={model.settings.palette[0]} />
+                  <text x={PLATE.x} y={PLATE.y} textAnchor="middle" fill="#fff" stroke="#000" strokeWidth="0.4" paintOrder="stroke">CARD</text>
+                  <rect x={PLATE.x - STAND.width / 2} y={PLATE.y + STAND.y - STAND.depth / 2}
+                    width={STAND.width} height={STAND.depth} fill={model.settings.palette[0]} />
+                  <text x={PLATE.x} y={PLATE.y + STAND.y + 4} textAnchor="middle" fill="#fff" stroke="#000" strokeWidth="0.4" paintOrder="stroke">STAND</text>
+                  <text x="128" y="23" textAnchor="middle" fill="#405d49">256 × 256 mm</text>
+                </svg>
+              </section>
+            )}
             {model && (
               <section className="validation-panel">
                 <div className="validation-heading">

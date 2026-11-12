@@ -14,12 +14,14 @@ export default function Preview3D({ model }: { model: Model }) {
     const scene = new T.Scene(),
       camera = new T.PerspectiveCamera(35, 1, 0.1, 1000);
     camera.position.set(100, 150, 220);
+    if (model.settings.displayStand) camera.position.multiplyScalar(1.25);
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.minDistance = 160;
     controls.maxDistance = 430;
     const group = new T.Group();
     group.rotation.set(Math.PI, 0, 0);
+    if (model.settings.displayStand) group.position.y = 20;
     scene.add(group);
     for (const mesh of model.meshes) {
       const g = new T.BufferGeometry();
@@ -77,7 +79,7 @@ export default function Preview3D({ model }: { model: Model }) {
     <div
       className="three-preview"
       ref={host}
-      aria-label="Rotate the card to inspect its flat face and thickness"
+      aria-label={model.settings.displayStand ? "Rotate the card and separate stand in their shared print layout" : "Rotate the card to inspect its flat face and thickness"}
     />
   );
 }

@@ -29,6 +29,24 @@ design / Load design includes the applied title and colours.
 
 ## Print specification
 
+### Optional matching display stand
+
+Enable **Include a matching display stand**, then update the star map. A
+70 × 30 × 14 mm cradle prints next to the card, separated by 10 mm, on the
+same 256 × 256 mm P1S plate. It uses the background filament. The upward-open
+slot is 10 mm deep and adjusts to card thickness plus 0.6 mm total clearance.
+The stand has a continuous 4 mm base and needs no bridging across the slot.
+
+The 3MF keeps both pieces in one build item on plate 1 and prints by layer.
+The STL ZIP includes the stand in the background-filament file, preserving the
+same shared origin. Import all STLs together as parts of one object; do not
+auto-arrange parts separately. After printing and cooling, insert the card
+upright into the stand. Geometry checks are not a physical-fit guarantee;
+printer tolerances, first-layer expansion and stability require a trial print.
+Existing saved designs without this option still load with no stand.
+
+### Card
+
 - A6 portrait: 105 × 148 mm, rounded 3 mm corners.
 - Thickness: 4–8 mm in 0.2 mm steps; default 4 mm.
 - A flat, non-embossed front, printed face down. Colour inlays occupy the same

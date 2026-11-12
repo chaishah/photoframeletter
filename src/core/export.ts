@@ -1,5 +1,6 @@
 import { zipSync, unzipSync, strToU8, strFromU8 } from "fflate";
 import type { Model, Mesh } from "./types";
+import { PLATE } from "./print-layout";
 export const xml = (s: string) =>
   s
     .replaceAll("&", "&amp;")
@@ -26,6 +27,7 @@ export function make3mf(
   const colours = [...new Set(model.meshes.map((m) => m.colour.toUpperCase()))];
   const settings = structuredClone(template);
   settings.filament_colour = colours;
+  settings.print_sequence = "by layer";
   const filamentKeys = settings._filament_array_keys as string[];
   delete settings._filament_array_keys;
   settings.different_settings_to_system = Array(colours.length + 2).fill("");
@@ -46,7 +48,7 @@ export function make3mf(
     `<model unit="millimeter" xmlns="${NS}" xmlns:p="${PROD}"><resources><basematerials id="100">${colours.map((c, i) => `<base name="Filament ${i + 1}" displaycolor="${c}"/>`).join("")}</basematerials>${model.meshes.map((m, i) => meshXml(m, i + 1)).join("")}</resources></model>`;
   const main =
     header +
-    `<model unit="millimeter" xml:lang="en-US" xmlns="${NS}" xmlns:p="${PROD}" xmlns:BambuStudio="http://schemas.bambulab.com/package/2021" requiredextensions="p"><metadata name="Application">BambuStudio-02.08.02.61</metadata><metadata name="BambuStudio:3mfVersion">1</metadata><metadata name="Title">Our Night Sky</metadata><metadata name="Description">Flat A6 star-map card. Model checks are recorded separately from native slicing and physical print proof.</metadata><resources><object id="20" p:UUID="${uuid(20)}" type="model"><components>${model.meshes.map((_, i) => `<component p:path="/3D/Objects/object_1.model" objectid="${i + 1}" p:UUID="${uuid(30 + i)}" transform="1 0 0 0 1 0 0 0 1 0 0 0"/>`).join("")}</components></object></resources><build p:UUID="${uuid(50)}"><item objectid="20" p:UUID="${uuid(51)}" transform="1 0 0 0 1 0 0 0 1 112 116 0" printable="1"/></build></model>`;
+    `<model unit="millimeter" xml:lang="en-US" xmlns="${NS}" xmlns:p="${PROD}" xmlns:BambuStudio="http://schemas.bambulab.com/package/2021" requiredextensions="p"><metadata name="Application">BambuStudio-02.08.02.61</metadata><metadata name="BambuStudio:3mfVersion">1</metadata><metadata name="Title">Our Night Sky</metadata><metadata name="Description">Flat A6 star-map card. Model checks are recorded separately from native slicing and physical print proof.</metadata><resources><object id="20" p:UUID="${uuid(20)}" type="model"><components>${model.meshes.map((_, i) => `<component p:path="/3D/Objects/object_1.model" objectid="${i + 1}" p:UUID="${uuid(30 + i)}" transform="1 0 0 0 1 0 0 0 1 0 0 0"/>`).join("")}</components></object></resources><build p:UUID="${uuid(50)}"><item objectid="20" p:UUID="${uuid(51)}" transform="1 0 0 0 1 0 0 0 1 ${PLATE.x} ${PLATE.y} 0" printable="1"/></build></model>`;
   const config =
     header +
     `<config><object id="20"><metadata key="name" value="Our Night Sky — ${xml(model.settings.location)}"/><metadata key="extruder" value="1"/><metadata face_count="${model.report.triangles}"/>${model.meshes.map((m, i) => `<part id="${i + 1}" subtype="normal_part" uuid="${uuid(60 + i)}"><metadata key="name" value="${xml(m.name)}"/><metadata key="extruder" value="${m.slot + 1}"/><metadata key="matrix" value="1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1"/><metadata key="source_file" value="generated-star-map"/><metadata key="source_object_id" value="0"/><metadata key="source_volume_id" value="${i}"/><metadata key="source_offset_x" value="0"/><metadata key="source_offset_y" value="0"/><metadata key="source_offset_z" value="0"/></part>`).join("")}</object><plate><metadata key="plater_id" value="1"/><metadata key="plater_name" value="Our Night Sky"/><metadata key="locked" value="false"/><model_instance><metadata key="object_id" value="20"/><metadata key="instance_id" value="0"/><metadata key="identify_id" value="1"/></model_instance></plate><assemble/></config>`;
@@ -142,6 +144,10 @@ export function makeStlZip(model: Model) {
   files["READ-ME.txt"] = strToU8(
     "Import ALL STL files together into Bambu Studio as parts of ONE object. Units: mm. Preserve the shared origin and relative Z positions. Assign the named filament colours. Print face-down using 0.2 mm layers, with the inlays in layers 1–3. Slice and inspect before printing. STL does not store colours or printer settings.\n",
   );
+  if (model.settings.displayStand)
+    files["DISPLAY-STAND.txt"] = strToU8(
+      "The background-filament STL includes the separate display stand, already placed 10 mm beside the card. Import all files together as ONE object with multiple parts; do not auto-arrange individual parts. Print by layer on one plate. After cooling, insert the card into the stand. Slot clearance is 0.6 mm total; physical fit requires a trial print.\n",
+    );
   files["design.json"] = strToU8(JSON.stringify(model.settings, null, 2));
   files["validation.json"] = strToU8(JSON.stringify(model.report, null, 2));
   return zipSync(files, { level: 6 });

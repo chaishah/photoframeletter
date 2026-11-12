@@ -12,6 +12,8 @@ import { calculateSky } from "./sky";
 import { Kernel, totalArea, groups, area, inside } from "./clipper";
 import { artwork, outline } from "./artwork";
 import { backing, extrude, inspectMesh } from "./mesh";
+import { makeDisplayStand, standVolume, fitsPlate } from "./stand";
+import { STAND } from "./print-layout";
 export async function sha256(data: string | Uint8Array) {
   const bytes =
     typeof data === "string" ? new TextEncoder().encode(data) : data;
@@ -155,6 +157,24 @@ export async function generate(
       code: "VOLUME",
       message: "The assembled volume does not match a completely filled card.",
     });
+  if (s.displayStand) {
+    const stand = makeDisplayStand(s.thickness, colours[0]);
+    const stats = inspectMesh(stand);
+    if (stats.invalidEdges || stats.degenerate || stats.volume <= 0 ||
+      Math.abs(stats.volume - standVolume(s.thickness)) > 0.0001)
+      errors.push({ code: "STAND_TOPOLOGY", message: "The display stand failed its geometry checks." });
+    if (stand.vertices.some(([x, y, z]) =>
+      Math.abs(x) > STAND.width / 2 + 1e-7 ||
+      y < 74 + STAND.cardGap - 1e-7 ||
+      y > STAND.y + STAND.depth / 2 + 1e-7 ||
+      z < 0 || z > STAND.height + 1e-7))
+      errors.push({ code: "STAND_BOUNDS", message: "The stand exceeds its reserved area beside the card." });
+    meshes.push(stand);
+    volume += stats.volume;
+    warnings.push({ code: "DISPLAY_STAND", message: "Card and stand share one plate with a 10 mm gap. The stand uses the background filament and a slot 0.6 mm wider than the card. Let both pieces cool before assembly; physical fit is not yet tested." });
+  }
+  if (meshes.some((mesh) => !fitsPlate(mesh)))
+    errors.push({ code: "PLATE_BOUNDS", message: "The layout does not fit the reserved P1S print area." });
   const triangles = meshes.reduce((n, m) => n + m.triangles.length, 0),
     vertices = meshes.reduce((n, m) => n + m.vertices.length, 0);
   if (triangles > 100000)
@@ -233,8 +253,14 @@ export async function generate(
     modelValidated: errors.length === 0,
     nativeSlice: "not-run",
     physicalPrint: "not-run",
-    dimensions: [105, 148, s.thickness],
+    dimensions: s.displayStand
+      ? [105, 74 + STAND.y + STAND.depth / 2, STAND.height]
+      : [105, 148, s.thickness],
     volume,
+    ...(s.displayStand && { displayStand: {
+      width: STAND.width, depth: STAND.depth, height: STAND.height,
+      slotWidth: s.thickness + STAND.clearance, cardGap: STAND.cardGap,
+    } }),
     inputHash: await sha256(JSON.stringify(s)),
     modelHash: await sha256(JSON.stringify(meshes)),
     versions: {

@@ -25,6 +25,7 @@ export interface Settings {
   constellations: boolean;
   title: string;
   caption: boolean;
+  displayStand?: boolean;
   palette: [string, string, string, string];
 }
 export interface ResolvedTime {
@@ -78,6 +79,7 @@ export interface Report {
   versions: Record<string, string>;
   generatedUtc: string;
   bytes3mf?: number;
+  displayStand?: { width: number; depth: number; height: number; slotWidth: number; cardGap: number };
 }
 export interface Model {
   settings: Settings;

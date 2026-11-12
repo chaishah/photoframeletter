@@ -564,6 +564,23 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 10px;
   padding: 18px 21px;
 }
+.stand-option { margin-top: 22px; padding-top: 12px; border-top: 1px solid #dfe6d8; }
+.stand-option p { font-size: 11px; color: #50675a; }
+.plate-layout {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid #e1e6dc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+.plate-layout > div { flex: 1 1 180px; }
+.plate-layout h3 { font-size: 14px; color: #3d5c47; }
+.plate-layout p { font-size: 11px; color: #50675a; }
+.plate-layout svg { width: 180px; max-width: 100%; margin: auto; font-size: 11px; }
 .validation-heading {
   display: flex;
   align-items: center;

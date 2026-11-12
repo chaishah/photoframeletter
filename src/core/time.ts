@@ -53,6 +53,8 @@ export function resolveTime(
 }
 export const timezoneNames = () => moment.tz.names();
 export function validateSettings(s: Settings): ResolvedTime {
+  if (s.displayStand !== undefined && typeof s.displayStand !== "boolean")
+    throw new InputError("displayStand", "Choose whether to include a display stand.");
   if (s.version !== 1)
     throw new InputError("version", "Unsupported design version.");
   if (!s.location?.trim())

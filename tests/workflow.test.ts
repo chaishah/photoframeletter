@@ -31,6 +31,46 @@ beforeAll(async () => {
   perth = await generate(DEFAULT_SETTINGS, stars, lines, font, k);
 });
 describe("generation and export gates", () => {
+  for (const thickness of [4, 6, 8]) {
+    it(`exports card and ${thickness} mm stand together on plate 1`, async () => {
+      const input: Settings = { ...DEFAULT_SETTINGS, displayStand: true, thickness,
+        ...(thickness === 6 && { palette: ["#101E30", "#FFFFFF", "#FFFFFF", "#FFFFFF"] as Settings["palette"] }) };
+      const model = await generate(input, stars, lines, font, k);
+      expect(model.report.errors).toEqual([]);
+      expect(model.report.displayStand?.slotWidth).toBeCloseTo(thickness + 0.6);
+      expect(model.report.dimensions).toEqual([105, 188, 14]);
+      const zip = unzipSync(make3mf(model, settings));
+      const main = strFromU8(zip["3D/3dmodel.model"]);
+      const config = strFromU8(zip["Metadata/model_settings.config"]);
+      const objects = strFromU8(zip["3D/Objects/object_1.model"]);
+      expect(main.match(/<item /g)).toHaveLength(1);
+      expect(main.match(/<component /g)).toHaveLength(model.meshes.length);
+      expect(config.match(/<plate>/g)).toHaveLength(1);
+      expect(config.match(/<model_instance>/g)).toHaveLength(1);
+      expect(config).toContain('key="plater_id" value="1"');
+      expect(JSON.parse(strFromU8(zip["Metadata/project_settings.config"])).print_sequence).toBe("by layer");
+      // Inspect actual serialized placement rather than only source meshes.
+      const transform = main.match(/<item[^>]+transform="([^"]+)"/)![1].split(" ").map(Number);
+      const bounds = [...objects.matchAll(/<object id="\d+"[^>]*>(.*?)<\/object>/g)].map((object) => {
+        const v = [...object[1].matchAll(/<vertex x="([^"]+)" y="([^"]+)" z="([^"]+)"\/>/g)]
+          .map((p) => [Number(p[1]) + transform[9], Number(p[2]) + transform[10], Number(p[3]) + transform[11]]);
+        expect(v.every(([x, y, z]) => x >= 5 && x <= 251 && y >= 5 && y <= 251 && z >= 0)).toBe(true);
+        return { minY: Math.min(...v.map((p) => p[1])), maxY: Math.max(...v.map((p) => p[1])) };
+      });
+      expect(bounds.at(-1)!.minY - Math.max(...bounds.slice(0, -1).map((b) => b.maxY))).toBeCloseTo(10, 5);
+      const stls = unzipSync(makeStlZip(model));
+      expect(stls["DISPLAY-STAND.txt"]).toBeDefined();
+      const background = stls["filament-1-101E30.stl"];
+      const view = new DataView(background.buffer, background.byteOffset, background.byteLength);
+      let standTriangles = 0;
+      for (let i = 0; i < view.getUint32(80, true); i++) {
+        const y = view.getFloat32(84 + i * 50 + 16, true);
+        if (y >= 84) standTriangles++;
+      }
+      expect(standTriangles).toBe(model.meshes.at(-1)!.triangles.length);
+      expect(JSON.parse(strFromU8(stls["design.json"])).displayStand).toBe(true);
+    }, 15000);
+  }
   for (const occasion of OCCASIONS) {
     it(`exports the ${occasion.name} occasion with printable lettering`, async () => {
       const input = applyOccasion(DEFAULT_SETTINGS, occasion);
